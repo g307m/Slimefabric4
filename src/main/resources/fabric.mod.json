@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "slimefabric4",
+  "version": "4.9.0",
+  "name": "Slimefabric 4",
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "xyz.grantlmul.slimefabric4.Slimefabric4Server"
+    ]
+  },
+  "mixins": [
+    "Slimefabric4.mixins.json"
+  ]
+}
