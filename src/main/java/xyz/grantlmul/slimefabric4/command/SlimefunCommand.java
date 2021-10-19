@@ -14,21 +14,30 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
+import xyz.grantlmul.slimefabric4.items.guide.SlimefabricGuideGui;
+import xyz.grantlmul.slimefabric4.util.Characters;
 import xyz.grantlmul.slimefabric4.util.ItemMeta;
 
 class SlimefunCommand {
     private SlimefunCommand() {}
     static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralCommandNode<ServerCommandSource> slimefunCommandNode = dispatcher.register(CommandManager.literal("slimefun").then(CommandManager.literal("guide").executes(context -> {
-            try {
+            if (context.getSource().getPlayer() != null) {
                 ItemMeta guideItem = new ItemMeta(Items.ENCHANTED_BOOK.getDefaultStack());
                 guideItem.setName("§aSlimefun Guide §7(Chest GUI)");
-                guideItem.setLore(0,"§eRight Click §8\u21E8 §7Browse Items");
-                guideItem.setLore(1, "§eShift + Right Click §8\u21E8 §7Open Settings / Credits");
+                guideItem.setLore(0,"§eRight Click §8"+Characters.ARROW+" §7Browse Items");
+                guideItem.setLore(1, "§eShift + Right Click §8"+Characters.ARROW+" §7Open Settings / Credits");
                 guideItem.setSubNbt("slimefunGuide", NbtByte.of(true));
                 context.getSource().getPlayer().giveItemStack(guideItem.getItemStack());
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else {
+                context.getSource().sendError(new TranslatableText("slimefabric.error.requiresplayer"));
+            }
+            return 1;
+        })).then(CommandManager.literal("open_guide").executes(context -> {
+            if (context.getSource().getPlayer() != null) {
+                new SlimefabricGuideGui().open(context.getSource().getPlayer());
+            } else {
+                context.getSource().sendError(new TranslatableText("slimefabric.error.requiresplayer"));
             }
             return 1;
         })));

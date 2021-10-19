@@ -6,7 +6,7 @@
   "environment": "*",
   "entrypoints": {
     "server": [
-      "xyz.grantlmul.slimefabric4.Slimefabric4Server"
+      "xyz.grantlmul.slimefabric4.SlimefabricServer"
     ]
   },
   "mixins": [
