@@ -2,6 +2,7 @@ package xyz.grantlmul.slimefabric4.util;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
@@ -26,7 +27,10 @@ public abstract class ChestGui implements IChestGui {
 
         Method method = null;
         try {
-            method = GenericContainerScreenHandler.class.getMethod("createGeneric9x" + height, int.class, PlayerInventory.class);
+            if (height == 3 || height == 6)
+                method = GenericContainerScreenHandler.class.getMethod("createGeneric9x" + height, int.class, PlayerInventory.class, Inventory.class);
+            else
+                method = GenericContainerScreenHandler.class.getMethod("createGeneric9x" + height, int.class, PlayerInventory.class);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }

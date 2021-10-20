@@ -14,6 +14,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
+import xyz.grantlmul.slimefabric4.items.guide.SlimefabricGuide;
 import xyz.grantlmul.slimefabric4.items.guide.SlimefabricGuideGui;
 import xyz.grantlmul.slimefabric4.util.Characters;
 import xyz.grantlmul.slimefabric4.util.ItemMeta;
@@ -34,10 +35,10 @@ class SlimefunCommand {
             }
             return 1;
         })).then(CommandManager.literal("open_guide").executes(context -> {
-            if (context.getSource().getPlayer() != null) {
-                new SlimefabricGuideGui().open(context.getSource().getPlayer());
-            } else {
-                context.getSource().sendError(new TranslatableText("slimefabric.error.requiresplayer"));
+            try {
+                new SlimefabricGuide().openGuide(context.getSource().getPlayer());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             return 1;
         })));
